@@ -54,6 +54,14 @@ ACTIONS = [
     "Define the acceptance criteria",
 ]
 
+MOTIVATIONS = [
+    "bring clarity to a messy side project backlog",
+    "turn a restless idea into one deliberate demo",
+    "practice writing deeply human commit notes",
+    "prove that a tiny tool can unlock a fresh habit",
+    "balance new stack experiments with the busy week ahead",
+]
+
 
 @dataclass(frozen=True)
 class ProjectIdea:
@@ -64,6 +72,7 @@ class ProjectIdea:
     discipline: str
     story: str
     next_action: str
+    motivation: str
 
 
 class IdeaGenerator:
@@ -104,6 +113,7 @@ class IdeaGenerator:
             f"Stack: {', '.join(idea.stack)}\n"
             f"Story: {idea.story}"
             f"\nNext action: {idea.next_action}"
+            f"\nMotivation: {idea.motivation}"
         )
 
     def generate(self, focus: Optional[str] = None) -> ProjectIdea:
@@ -111,9 +121,10 @@ class IdeaGenerator:
         domain = self.pick_domain()
         perspective = self.pick_perspective()
         discipline = self.pick_discipline()
+        motivation = self.pick_motivation()
         story = (
             f"Build a {perspective} companion for {domain}, "
-            f"incrementally delivering {discipline} helpers with {stack[0]} and friends."
+            f"incrementally delivering {discipline} helpers with {stack[0]} and friends {motivation}."
         )
         next_action = self.pick_next_action()
         return ProjectIdea(
@@ -124,10 +135,14 @@ class IdeaGenerator:
             discipline=discipline,
             story=story,
             next_action=next_action,
+            motivation=motivation,
         )
 
     def pick_next_action(self) -> str:
         return self.random.choice(ACTIONS)
+
+    def pick_motivation(self) -> str:
+        return self.random.choice(MOTIVATIONS)
 
 
 def print_ideas(count: int, focus: Optional[str], seed: Optional[int]) -> None:
