@@ -116,6 +116,16 @@ class IdeaGenerator:
             f"\nMotivation: {idea.motivation}"
         )
 
+    def describe_detailed(self, idea: ProjectIdea) -> str:
+        base = self.describe(idea)
+        action_plan = self.make_action_plan(idea)
+        return f"{base}\n\nAction plan:\n{action_plan}"
+
+    def describe_detailed(self, idea: ProjectIdea) -> str:
+        base = self.describe(idea)
+        action_plan = self.make_action_plan(idea)
+        return f"{base}\n\nAction plan:\n{action_plan}"
+
     def generate(self, focus: Optional[str] = None) -> ProjectIdea:
         stack = self.pick_stack(focus)
         domain = self.pick_domain()
@@ -144,15 +154,26 @@ class IdeaGenerator:
     def pick_motivation(self) -> str:
         return self.random.choice(MOTIVATIONS)
 
+    def make_action_plan(self, idea: ProjectIdea) -> str:
+        highlights = [
+            f"- Sketch a {idea.stack[0]} prototype to prove the story",
+            f"- Run a quick sanity check around {idea.domain} needs",
+            f"- Capture why this matters: {idea.motivation}",
+        ]
+        return "\n".join(highlights)
 
-def print_ideas(count: int, focus: Optional[str], seed: Optional[int]) -> None:
+
+def print_ideas(count: int, focus: Optional[str], seed: Optional[int], detail: bool) -> None:
     generator = IdeaGenerator(seed=seed)
     for index in range(1, count + 1):
         idea = generator.generate(focus)
         header = f"Idea {index}"
         print(header)
         print("-" * len(header))
-        print(generator.describe(idea))
+        if detail:
+            print(generator.describe_detailed(idea))
+        else:
+            print(generator.describe(idea))
         print()
 
 
@@ -169,12 +190,17 @@ def parse_args() -> argparse.Namespace:
         help="restrict the output to a particular stack category",
     )
     parser.add_argument("--seed", "-s", type=int, help="replay the same random stream")
+    parser.add_argument(
+        "--detail",
+        action="store_true",
+        help="print the action plan so each idea reads like a sprint recap",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    print_ideas(count=args.count, focus=args.focus, seed=args.seed)
+    print_ideas(count=args.count, focus=args.focus, seed=args.seed, detail=args.detail)
 
 
 if __name__ == "__main__":
