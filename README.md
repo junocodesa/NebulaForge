@@ -22,6 +22,8 @@ NebulaForge is the living lab for *Luminous Atlas*, the personal project playboo
 3. Code, commit, and re-run the tool each time for inspiration before drafting the next change.
 4. Once everything feels finished, bundle the notes into a post and celebrate the solo project.
 
+Need a refresher on flags or what `--detail` means? Jump into `docs/cli_guide.md` for a short reference that read like the logbook of a real solo dev.
+
 ## Running
 
 ```bash
