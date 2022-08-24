@@ -1,0 +1,11 @@
+# NebulaForge local junk
+logs/
+*.pyc
+__pycache__/
+AGENTS.md
+# Build residues
+.vscode/
+.DS_Store
+*.sqlite3
+.env
+dist/
