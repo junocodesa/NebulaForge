@@ -121,11 +121,6 @@ class IdeaGenerator:
         action_plan = self.make_action_plan(idea)
         return f"{base}\n\nAction plan:\n{action_plan}"
 
-    def describe_detailed(self, idea: ProjectIdea) -> str:
-        base = self.describe(idea)
-        action_plan = self.make_action_plan(idea)
-        return f"{base}\n\nAction plan:\n{action_plan}"
-
     def generate(self, focus: Optional[str] = None) -> ProjectIdea:
         stack = self.pick_stack(focus)
         domain = self.pick_domain()
